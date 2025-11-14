@@ -1,0 +1,30 @@
+name: Build Info Update
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build_info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository with token
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run build_info script
+        run: python PJ11_gitinfo_15.py
+
+      - name: Commit and push build_info.txt
+        run: |
+          git config user.name "CI Bot"
+          git config user.email "ci@example.com"
+          git add build_info.txt
+          git commit -m "Автоматическое обновление build_info.txt" || echo "Нет изменений"
+          git push
