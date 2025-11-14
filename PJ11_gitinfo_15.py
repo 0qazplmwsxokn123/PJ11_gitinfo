@@ -27,3 +27,5 @@ def save_build_info():
 
 if __name__ == "__main__":
     save_build_info()
+
+# Тест CI/CD обновления build_info
